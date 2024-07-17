@@ -1,0 +1,8 @@
+Postgres cluster neighbornook-db created
+  Username:    postgres
+  Password:    h9TIvK68HyUMy2y
+  Hostname:    neighbornook-db.internal
+  Flycast:     fdaa:9:872b:0:1::3
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:h9TIvK68HyUMy2y@neighbornook-db.flycast:5432

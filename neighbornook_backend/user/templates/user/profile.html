@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <div class="container profile-container">
+        <div class="profile">
+            <img src="{{ profile_image }}" alt="profile image" class="profile-image {% if profile.profile_img.name == 'media/default.png' %}default-img-class{% else %}custom-img-class{% endif %}">
+            <div class="profile-info">
+                <div class="profile-details">
+                    <p class="profile-names">{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+                    <div class="profile-details_small">
+                        <p>
+                            <small>{{ user_profile.username }}</small> / <small>{{ user_profile.email }}</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="profile-edit">
+                    {% if profile.user == current_user %}
+                        <a href="{% url 'communication:inbox' %}" class="profile-inbox">
+                            <i class="bi bi-inbox"></i>
+                        </a>
+                        <button class="btn">
+                            <a href="{% url 'user:profile_update' %}" class="profile-edit_link">
+                                Edit Profile
+                            </a>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}

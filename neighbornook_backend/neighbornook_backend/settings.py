@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',                   # whitenoise
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
+    'home.apps.HomeConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'bootstrap5', 
@@ -152,7 +153,7 @@ USE_TZ = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # whitenoise
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'  #put / at the beginning
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -160,7 +161,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-LOGIN_REDIRECT_URL = 'main:home_page_loggedin'
+LOGIN_REDIRECT_URL = 'home:home_loggedin'
 LOGIN_URL = 'user:login'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -1,0 +1,99 @@
+{% extends "home/base.html" %}
+{% block title %}
+    Welcome to Neighborhood
+{% endblock title %}
+
+{% block not_logged %}
+
+    <header class="site-header not_loggedin">
+        <nav class="navbar navbar-expand-lg fixed-top nav-not_loggedin">
+            <a href="#" class="logo-title navbar-brand title">
+                Neighbornook
+            </a>
+
+            <!-- WEATHER put here -->
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse right_side_nav" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item custom-nav-item">
+                        <a href="{% url 'user:login' %}" class="nav-link custom-nav-link">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item join-btn-nav">
+                        <a href="{% url 'user:signup' %}" class="nav-link custom-nav-link">
+                            Join Now
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="header-content">
+            <h1 class="header-title">
+                Start your adventure and meet new friends with Neighbornook
+            </h1>
+
+            <div class="join-btn">
+                <a href="{% url 'user:signup' %}" class="nav-link">
+                    Join Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="description">
+            <h2 class="not_loggedin_title">
+                Connect with locals and make new memories
+            </h2>
+
+            <p class="not_loggedin_description">
+                Discover events and activities made by your local community where you will meet new people and do fun activities together. 
+                Or simply create your own event based on your interests
+            </p>
+        </div>
+
+        <div class="image-carousel">
+
+        </div>
+
+        <div class="connections-container">
+            <h2 class="connections-title">
+                Get connected to
+            </h2>
+
+            <div class="connections">
+                <div class="connections-box">
+                    <i class="bi bi-people-fill"></i>
+                    <h3 class="connections-subtitle">People</h3>
+                    <p class="connections-description">
+                        Young professionals seeking meaningful connections with like-minded individuals
+                    </p>
+                </div>
+
+                <div class="connections-box">
+                    <i class="bi bi-person-raised-hand"></i>
+                    <h3 class="connections-subtitle">Groups</h3>
+                    <p class="connections-description">
+                        Curated communities to stay connected with soulmates
+                    </p>
+                </div>
+
+                <div class="connections-box">
+                    <i class="bi bi-magic"></i>
+                    <h3 class="connections-subtitle">Activities</h3>
+                    <p class="connections-description">
+                        Explore and join activities organized by our community
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock not_logged %}

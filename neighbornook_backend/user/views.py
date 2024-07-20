@@ -17,23 +17,28 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             profile_img = form.cleaned_data.get('profile_img')
+            bio = form.cleaned_data.get('bio')
+
+            profile = user.profile
 
             if profile_img:
-                profile = user.profile
                 profile.profile_img = profile_img
-                profile.save()
+            if bio:
+                profile.bio = bio
+            profile.save()
             
             messages.success(request, f'Account created for {user.username}!')
 
             login(request, user)
-            return redirect('main:home_loggedin')
+            return redirect('home:home_loggedin')
 
     else:
         form = SignUpForm()
 
     return render(request, 'user/signup.html', {
                             'form': form
-                            })
+                            }
+                    )
 
 logger = logging.getLogger(__name__)
 class CustomLoginView(LoginView):
@@ -54,7 +59,7 @@ class CustomLoginView(LoginView):
             return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('main:home_loggedin')
+        return reverse_lazy('home:home_loggedin')
 
 @login_required
 def profile(request, username):

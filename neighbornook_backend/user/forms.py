@@ -20,6 +20,8 @@ def custom_char_field(placeholder, input_type='text', **kwargs):
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Add a valid email address.')
+    profile_img = forms.ImageField(required=False)
+    bio = forms.CharField(required=False, widget=forms.Textarea)
 
     class Meta:
         model = User
@@ -52,6 +54,13 @@ class SignUpForm(UserCreationForm):
                                         'placeholder': 'Confirm Your Password'
                                     }
                                 ))
+    
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            Profile.objects.create(user=user, bio=self.cleaned_data['bio'], profile_img=self.cleaned_data['profile_img'])
+        return user
     
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)

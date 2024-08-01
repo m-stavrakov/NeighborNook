@@ -18,14 +18,42 @@
 <body>
     {% if not user.is_authenticated %}
 
+        <nav class="navbar navbar-expand-lg fixed-top nav-not_loggedin">
+            <a href="{% url 'home:home' %}" class="logo-title navbar-brand title">
+                Neighbornook
+            </a>
+
+            <!-- WEATHER put here -->
+
+            <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse right_side_nav collapse-custom" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item custom-nav-item">
+                        <a href="{% url 'user:login' %}" class="nav-link custom-nav-link">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item join-btn-nav">
+                        <a href="{% url 'user:signup' %}" class="nav-link">
+                            Join Now
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         {% block not_logged %}
-        
         {% endblock not_logged %}
+
 
     {% else %}
 
-        <header class="site-header not_loggedin">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+        <header class="site-header">
+            <nav class="navbar navbar-expand-lg fixed-top nav-not_loggedin">
                 <a href="#" class="logo-title navbar-brand">
                     Neighbornook
                 </a>
@@ -56,7 +84,6 @@
                                         {{ category }}
                                     </a>
                                 {% endfor %} -->
-                                <a href="#" class="dropdown-item category-drop_menu">test</a>
                             </div>
                         </li>
         

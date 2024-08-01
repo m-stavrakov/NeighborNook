@@ -44,23 +44,23 @@ class SignUpForm(UserCreationForm):
                                 widget=forms.PasswordInput(
                                     attrs={
                                         'class': 'password-toggle auth_inputs password', 
-                                        'placeholder': 'Your Password'
+                                        'placeholder': 'Your Password',
                                     }
                                 ))
     password2 = forms.CharField(label='Confirm Password', 
                                 widget=forms.PasswordInput(
                                     attrs={
                                         'class': 'password-toggle auth_inputs password', 
-                                        'placeholder': 'Confirm Your Password'
+                                        'placeholder': 'Confirm Your Password',
                                     }
                                 ))
     
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-            Profile.objects.create(user=user, bio=self.cleaned_data['bio'], profile_img=self.cleaned_data['profile_img'])
-        return user
+    # def save(self, commit=True):
+    #     user = super().save(commit=False)
+    #     if commit:
+    #         user.save()
+    #         Profile.objects.create(user=user, bio=self.cleaned_data['bio'], profile_img=self.cleaned_data['profile_img'])
+    #     return user
     
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
@@ -75,11 +75,11 @@ class SignUpForm(UserCreationForm):
                     'class': 'form-control password auth_inputs',
                 })
 
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        qs = User.objects.filter(username=username)
-        if qs.exists():
-            raise ValidationError("Username is taken")
+    # def clean_username(self):
+    #     username = self.cleaned_data.get('username')
+    #     qs = User.objects.filter(username=username)
+    #     if qs.exists():
+    #         raise ValidationError("Username is taken")
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -114,11 +114,11 @@ class ProfileUpdateForm(forms.ModelForm):
         self.fields['profile_img'].widget.attrs.update({'class': 'sign_up-img'})
     
 class LoginForm(AuthenticationForm):
-    username = custom_char_field('Username')
+    username = custom_char_field('Username', 'Username')
     password = forms.CharField(label='Password', 
                                 widget=forms.PasswordInput(
                                     attrs={
-                                        'class': 'password-toggle auth_inputs password', 
+                                        'class': 'auth_inputs password', 
                                         'placeholder': 'Your Password',
                                         'id': 'password_login',
                                     }

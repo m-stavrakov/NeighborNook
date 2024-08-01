@@ -15,3 +15,32 @@ document.addEventListener('DOMContentLoaded', () => {
         carouselInner.style.animation = `move 40s linear infinite`;
     });
 })
+
+// Visible/Invisible password
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordToggles = document.querySelectorAll('.password-toggle');
+  
+    passwordToggles.forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            const inputGroup = toggle.closest('.input-group');
+            if (inputGroup) {
+                const passwordField = inputGroup.querySelector('.password');
+                if (passwordField) {
+                    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordField.setAttribute('type', type);
+  
+                    const toggleText = toggle.querySelector('.showPasswordToggle');
+                    if (toggleText) {
+                        if (type === 'password') {
+                            toggleText.textContent = 'Show';
+                            toggleText.style.color = 'white';
+                        } else {
+                            toggleText.textContent = 'Hide';
+                            toggleText.style.color = '#FFCC00';
+                        }
+                    }
+                }
+            }
+        });
+    });
+});

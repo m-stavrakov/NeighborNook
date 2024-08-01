@@ -1,41 +1,48 @@
 {% extends "home/base.html" %}
 {% load crispy_forms_tags %}
-{% block content %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group px-5">
-                <legend class="border-bottom mb-4">
-                    Login
-                </legend>
-                <div class="px-5 register_form">
-                    {% for field in form %}
-                    {% if field.name == 'password' %}
-                    <div class="input-group mb-3 input-fields">
-                        {{ field|as_crispy_field }}
-                        <div class="input-group-append show-container">
-                            <span class="input-group-text password-toggle">
-                                <small class="showPasswordToggle">Show</small>
-                            </span>
+
+{% block not_logged %}
+    <div class="main_not_loggedin_login">
+        <div class="content-section container">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group px-5">
+                    <legend class="border-bottom custom-border register-title mb-4">
+                        Login
+                    </legend>
+                    <div class="px-5 register_form login_form">
+                        {% for field in form %}
+                        {% if field.name == 'password' %}
+                        <div class="input-group mb-3 input-fields">
+                            {{ field|as_crispy_field }}
+                            <div class="input-group-append show-container">
+                                <span class="input-group-text password-toggle_login">
+                                    <small class="showPasswordToggle">Show</small>
+                                </span>
+                            </div>
                         </div>
+                        {% else %}
+                            {{ field|as_crispy_field }}
+                        {% endif %}
+                        {% endfor %}
                     </div>
-                    {% else %}
-                        {{ field|as_crispy_field }}
-                    {% endif %}
-                    {% endfor %}
+                </fieldset>
+
+                <div class="form-group form-bottom">
+                    <button class="btn auth-btn" type="submit">
+                        Login
+                    </button>
+                    <small class="text-muted ml-2"> 
+                        {% comment %} <!-- <a href="{% url 'password_reset' %}">Forgot Password?</a> --> {% endcomment %}
+                    </small>
+                    <small class="auth-redirect">
+                        Don't have an account? 
+                        <a href="{% url 'user:signup' %}" class="ml-2">
+                            Sign Up
+                        </a>
+                    </small>
                 </div>
-            </fieldset>
-            <div class="form-group form-btn">
-                <button class="btn search-btn" type="submit">
-                    Login
-                </button>
-                <small class="text-muted ml-2"> 
-                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
-                </small>
-                <small class="text-muted">
-                    Don't have an account? <a href="{% url 'user:signup' %}" class="ml-2">Sign Up</a>
-                </small>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-{% endblock content %}
+{% endblock not_logged %}

@@ -19,11 +19,6 @@
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* .container{
-    max-width: 100%;
-    padding: 0 15px;
-} */
-
 /* HEADER LOGGEDIN */
 .logo-title{
     font-family: var(--title-font);
@@ -65,17 +60,15 @@
 }
 
 .dropdown-menu .category-drop_menu:hover{
-    background-color: var(--item-background-color);
+    background-color: var(--contrast-color);
     box-shadow: var(--box-shadow);
     border-radius: 5px;
-    font-weight: 900;
 }
 
 .dropdown-menu .profile-drop_menu:hover:not(:nth-child(5)){
-    background-color: var(--item-background-color);
+    background-color: var(--contrast-color);
     box-shadow: var(--box-shadow);
     border-radius: 5px;
-    font-weight: 900;
 }
 
 .dropdown-menu .profile-drop_menu:hover:nth-child(5){
@@ -112,6 +105,50 @@
 
 .logout-btn:hover{
     font-weight: 600;
+}
+
+.weather-container{
+    margin-left: 31%;
+}
+
+.weather-widget{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-icon{
+    width: 50px;
+    margin-right: 10px;
+}
+
+.weather_details{
+    display: flex;
+    flex-direction: column;
+    font-family: var(--body-font);
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: white;
+    cursor: default;
+    text-shadow: 
+        -1px -1px 0 black,  
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+.weather_location,
+.weather_temperature {
+    display: block;
+    text-align: center;
+}
+
+.navbar-brand{
+    margin-left: 0;
+}
+
+.ml-auto {
+    margin-left: auto !important;
 }
 
 /* HEADER NOT LOGGEDIN */

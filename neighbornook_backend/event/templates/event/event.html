@@ -1,0 +1,44 @@
+{% extends "home/base.html" %}
+{% block title %}
+    {{title}}
+{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+     <div class="main_not_loggedin_login">
+        <div class="content-section container">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group px-5">
+                    <legend class="border-bottom custom-border register-title mb-4">
+                        {{ title }}
+                    </legend>
+                    {% if messages %}
+                        <div id="message-container">
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="px-5 register_form login_form">
+                        {% for field in form %}
+                            <div class="input-group mb-3 input-fields">
+                                {{ field|as_crispy_field }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+
+                <div class="form-group form-bottom">
+                    <button class="btn auth-btn" type="submit">
+                        {{ button_text }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

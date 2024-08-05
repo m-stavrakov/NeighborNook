@@ -129,6 +129,7 @@ class LoginForm(AuthenticationForm):
         password = self.cleaned_data.get('password')
 
         if username_or_email and password:
+            username_or_email = username_or_email.lower()
             if '@' in username_or_email:
                 try:
                     user = User.objects.get(email=username_or_email)

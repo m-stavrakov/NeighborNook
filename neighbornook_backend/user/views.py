@@ -5,12 +5,16 @@ from .forms import SignUpForm, ProfileUpdateForm, UserUpdateForm, LoginForm
 from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.views.generic import DetailView
 import logging
 from django.urls import reverse_lazy
+from weather_api.weather import get_weather_context
 
 def signup(request):
+    location = '51.5072,-0.1276'
+    context = get_weather_context(location)
+
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
 
@@ -36,7 +40,8 @@ def signup(request):
         form = SignUpForm()
 
     return render(request, 'user/signup.html', {
-                            'form': form
+                            'form': form,
+                            **context
                             }
                     )
 
@@ -57,12 +62,36 @@ class CustomLoginView(LoginView):
         except Exception as e:
             logger.error(e)
             return super().form_invalid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Invalid username or password. Please try again.')
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('home:home_loggedin')
+    
+    def get(self, request, *args, **kwargs):
+        location = '51.5072,-0.1276'
+        weather_context = get_weather_context(location)
+        
+        context = self.get_context_data()
+        
+        context.update(weather_context)
+        
+        return self.render_to_response(context)
+
+def custom_logout_view(request):
+    location = '51.5072,-0.1276'
+    context = get_weather_context(location)
+
+    logout(request)    
+    return render(request, 'user/logout.html', {**context})
 
 @login_required
 def profile(request, username):
+    location = '51.5072,-0.1276'
+    context = get_weather_context(location)
+
     user_profile = get_object_or_404(User, username=username)
     profile = get_object_or_404(Profile, user=user_profile)
     profile_img = profile.profile_img.url
@@ -76,10 +105,14 @@ def profile(request, username):
         'current_user': request.user,
         'user_profile': user_profile,
         'profile': profile,
+        **context
     })
 
 @login_required
 def profile_update(request):
+    location = '51.5072,-0.1276'
+    context = get_weather_context(location)
+
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -96,7 +129,8 @@ def profile_update(request):
 
     return render(request, 'user/profile_update.html', {
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        **context
     })
 
 class UserProfileView(DetailView):

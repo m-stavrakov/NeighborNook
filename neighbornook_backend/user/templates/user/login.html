@@ -10,6 +10,16 @@
                     <legend class="border-bottom custom-border register-title mb-4">
                         Login
                     </legend>
+                    {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                                <div class="alert {{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
                     <div class="px-5 register_form login_form">
                         {% for field in form %}
                         {% if field.name == 'password' %}

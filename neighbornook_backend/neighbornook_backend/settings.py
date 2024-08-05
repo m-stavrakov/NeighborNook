@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'home.apps.HomeConfig',
     'event.apps.EventConfig',
+    'weather_api.apps.WeatherApiConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'bootstrap5', 
@@ -169,3 +170,8 @@ LOGIN_URL = 'user:login'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# WEATHER API
+METEOMATICS_USERNAME = os.environ.get('METEOMATICS_USERNAME')
+METEOMATICS_PASSWORD = os.environ.get('METEOMATICS_PASSWORD')
+METEOMATICS_BASE_URL = os.environ.get('METEOMATICS_BASE_URL')

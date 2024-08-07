@@ -3,7 +3,7 @@ from django.forms import modelformset_factory
 from .models import Event, EventImage
 from .widgets import MultipleFileInput
 
-INPUT_CLASS = 'auth_input'
+INPUT_CLASS = 'auth_inputs'
 
 class NewEventForm(forms.ModelForm):
     class Meta:
@@ -30,6 +30,9 @@ class NewEventForm(forms.ModelForm):
             'weather': forms.Select(attrs={'class': 'form-control'}),
             'what_to_bring': forms.TextInput(attrs={'class': INPUT_CLASS}),
         }
+
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
 
 class EventImageForm(forms.ModelForm):
     class Meta:

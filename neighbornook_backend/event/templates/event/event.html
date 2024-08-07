@@ -5,11 +5,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-     <div class="main_not_loggedin_login">
+     <div class="event_container">
         <div class="content-section container">
             <form method="POST">
                 {% csrf_token %}
-                <fieldset class="form-group px-5">
+                <fieldset class="form-group px-5 event_form">
                     <legend class="border-bottom custom-border register-title mb-4">
                         {{ title }}
                     </legend>
@@ -23,17 +23,55 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                    
-                    <div class="px-5 register_form login_form">
-                        {% for field in form %}
-                            <div class="input-group mb-3 input-fields">
-                                {{ field|as_crispy_field }}
+
+                    <div class="event_form">
+                        <div class="event_fields">
+                            <div class="event-box">
+                                {% for field in form %}
+                                    {% if field.name in event_fields_col1 %}
+                                        <div class="input-group  input-fields">
+                                            {{ field|as_crispy_field }}
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+
+                            <div class="event-box event-col-2">
+                                {% for field in form %}
+                                    {% if field.name in event_fields_col2 %}
+                                        <div class="input-group input-fields">
+                                            {{ field|as_crispy_field }}
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-5 register_form">
+                        <div class="img-form">
+                            <h3>Event Images</h3>
+                            {{ image_formset.management_form }}
+                            {% for form in image_formset %}
+                                <div class="input-group mb-3 input-fields">
+                                    {{ form.image.label_tag }} {{ form.image }}
+                                    {% if form.instance.pk %}
+                                        <label for="{{ form.DELETE.id_for_label }}">Delete</label>
+                                        {{ form.DELETE }}
+                                    {% endif %}
+                                    {{ form.errors }}
+                                </div>
+                            {% endfor %}
+                            <div class="input-group  input-fields">
+                                <input type="file" name="image" id="id_image" class="form-control img_input" multiple>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
 
-                <div class="form-group form-bottom">
+                <div class="form-group form-bottom mt-5">
                     <button class="btn auth-btn" type="submit">
                         {{ button_text }}
                     </button>

@@ -9,7 +9,7 @@ from weather_api.weather import get_weather_context
 # Event Creation
 @login_required
 def new_event(request):
-    ImageFormSet = modelformset_factory(EventImage, form=EventImageForm, extra=10, max_num=10)
+    ImageFormSet = modelformset_factory(EventImage, form=EventImageForm, extra=0, can_delete=True)
     location = '51.5072,-0.1276'
     context = get_weather_context(location)
 
@@ -22,21 +22,35 @@ def new_event(request):
             event.created_by = request.user
             event.save()
 
-            for form in image_formset.cleaned_data:
-                if form:
-                    image = form['image']
-                    EventImage(event=event, image=image).save()
+            for file in request.FILES.getlist('image'):
+                EventImage.objects.create(event=event, image=file)
+
+            for form in image_formset:
+                if form.cleaned_data.get('DELETE'):
+                    form.instance.delete()
+                else:
+                    image_instance = form.save(commit=False)
+                    image_instance.event = event
+                    image_instance.save()
 
             return redirect('home:home_loggedin')
     else:
         event_form = NewEventForm()
         image_formset = ImageFormSet(queryset=EventImage.objects.none())
+    
+    event_fields_col1 = ['name', 'description', 'location', 'date']
+    event_fields_col2 = ['time', 'category', 'age_limit', 'weather', 'what_to_bring']
+
+    categories = Category.objects.all()
 
     return render(request, 'event/event.html', {
         'form': event_form,
         'image_formset': image_formset,
         'title': 'New Event',
         'button_text': 'Create Event',
+        'event_fields_col1': event_fields_col1,
+        'event_fields_col2': event_fields_col2,
+        'categories': categories,
         **context
     })
 

@@ -585,6 +585,104 @@ main{
     border-bottom: 1px solid white;
 }
 
+/* EVENT */
+
+.event_container{
+    position: relative;
+    padding-top: 100px; 
+    margin-bottom: 50px;
+    height: fit-content;
+    background: none;
+    z-index: 0;
+}
+
+.event_container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/static/home/images/gathering.jpg') no-repeat center center/cover;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.event_form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.event_fields{
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    width: 70%;
+    /* gap: 50px; */
+}
+
+.event-box{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.event-col-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#div_id_category{
+    display: flex;
+    flex-direction: column;
+}
+
+#id_age_limit{
+    background-color: var(--contrast-color);
+    border: none;
+}
+
+#id_weather{
+    background-color: var(--contrast-color);
+    border: none;
+}
+
+.img-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.img-form h3{
+    margin-bottom: 20px;
+}
+
+.img_input{
+    border: none;
+    background: none;
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.img_input::-webkit-file-upload-button{
+    border: 2px solid var(--contrast-color);
+    background: none;
+    color: white;
+    border-radius: .25rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.5s ease;
+}
+
+.img_input::-webkit-file-upload-button:hover{
+    background-color: var(--contrast-color);
+}
+
 /* FOOTER */
 
 footer{

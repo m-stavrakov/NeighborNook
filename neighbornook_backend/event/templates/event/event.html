@@ -7,7 +7,7 @@
 {% block content %}
      <div class="event_container">
         <div class="content-section container">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <fieldset class="form-group px-5 event_form">
                     <legend class="border-bottom custom-border register-title mb-4">

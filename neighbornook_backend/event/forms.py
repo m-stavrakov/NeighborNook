@@ -9,7 +9,8 @@ class NewEventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = (
-            'name', 
+            'name',
+            'overview',
             'description', 
             'location', 
             'date', 
@@ -21,6 +22,7 @@ class NewEventForm(forms.ModelForm):
         
         widgets = {
             'name': forms.TextInput(attrs={'class': INPUT_CLASS}),
+            'overview': forms.Textarea(attrs={'class': INPUT_CLASS}),
             'description': forms.Textarea(attrs={'class': INPUT_CLASS}),
             'location': forms.TextInput(attrs={'class': INPUT_CLASS}),
             'date': forms.DateInput(attrs={'class': INPUT_CLASS, 'type': 'date'}),
@@ -28,7 +30,7 @@ class NewEventForm(forms.ModelForm):
             'category': forms.Select(attrs={'class': INPUT_CLASS}),
             'age_limit': forms.Select(attrs={'class': 'form-control'}),
             'weather': forms.Select(attrs={'class': 'form-control'}),
-            'what_to_bring': forms.TextInput(attrs={'class': INPUT_CLASS}),
+            'what_to_bring': forms.Textarea(attrs={'class': INPUT_CLASS}),
         }
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -49,6 +51,7 @@ class EditEventForm(forms.ModelForm):
         model = Event
         fields = (
             'name', 
+            'overview',
             'description', 
             'location', 
             'date', 
@@ -60,6 +63,7 @@ class EditEventForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'class': INPUT_CLASS}),
+            'overview': forms.TextInput(attrs={'class': INPUT_CLASS}),
             'description': forms.Textarea(attrs={'class': INPUT_CLASS}),
             'location': forms.TextInput(attrs={'class': INPUT_CLASS}),
             'date': forms.DateInput(attrs={'class': INPUT_CLASS, 'type': 'date'}),

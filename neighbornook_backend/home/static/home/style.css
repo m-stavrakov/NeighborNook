@@ -38,12 +38,6 @@
         1px -1px 0 #FFCC00,
         -1px 1px 0 #FFCC00,
         1px 1px 0 #FFCC00;
-    /* color: var(--contrast-color);
-    text-shadow: 
-        -1px -1px 0 black,  
-        1px -1px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black; */
 }
 
 .dropdown-menu{
@@ -585,6 +579,211 @@ main{
     border-bottom: 1px solid white;
 }
 
+/* HOME PAGE */
+
+.home_container{
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.event-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.event-col{
+    flex-direction: column;
+    flex: 1 1 calc(50% - 30px); 
+    box-sizing: border-box;
+    border: 2px solid var(--contrast-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.event-col:hover{
+    box-shadow: 0 0 10px var(--contrast-color);
+}
+
+.event-box{
+    width: 100%;
+    color: inherit;
+    font-family: var(--body-font);
+}
+
+.event-box:hover{
+    color: inherit;
+    text-decoration: none;
+}
+
+.event-title{
+    font-family: var(--sub-title);
+}
+
+.event-profile{
+    display: flex;
+    align-items: center;
+}
+
+.profile-img_event{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; 
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.event-overview{
+    border-top: 1px solid var(--border-color);
+}
+
+.event-overview p{
+    margin-top: 16px;
+}
+
+.event-time{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.event-time p{
+    margin-top: 10px;
+    margin-bottom: 10px !important;
+}
+
+.countdown{
+    font-weight: 600;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.carousel_inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    /* added */
+    width: 100%;
+}
+
+.carousel_item {
+    min-width: 100%;
+    box-sizing: border-box;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel_item.active {
+    opacity: 1 !important;
+}
+
+.carousel_item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    width: 5%;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transform: translateY(-50%);
+    z-index: 900;
+}
+
+.carousel-control.prev {
+    left: 0;
+}
+
+.carousel-control.next {
+    right: 0;
+}
+
+.no_img-container{
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 416px;
+    background-color: var(--body-quiet-color);
+    color: white;
+}
+
+.categories-list{
+    padding: 20px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    overflow-wrap: break-word;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: var(--contrast-color);
+}
+
+.category-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.category-link:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.category-name_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-name{
+    margin: 0; 
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.category-count {
+    font-size: 0.9em;
+}
+
 /* EVENT */
 
 .event_container{
@@ -619,7 +818,7 @@ main{
     display: flex;
     justify-content: space-between;
     /* align-items: center; */
-    width: 70%;
+    width: 85%;
     /* gap: 50px; */
 }
 
@@ -681,6 +880,15 @@ main{
 
 .img_input::-webkit-file-upload-button:hover{
     background-color: var(--contrast-color);
+}
+
+#id_overview{
+    height: 70px;
+}
+
+#id_what_to_bring{
+    width: 300px;
+    height: 70px;
 }
 
 /* FOOTER */

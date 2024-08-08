@@ -38,8 +38,8 @@ def new_event(request):
         event_form = NewEventForm()
         image_formset = ImageFormSet(queryset=EventImage.objects.none())
     
-    event_fields_col1 = ['name', 'description', 'location', 'date']
-    event_fields_col2 = ['time', 'category', 'age_limit', 'weather', 'what_to_bring']
+    event_fields_col1 = ['name', 'overview', 'description']
+    event_fields_col2 = ['location', 'date', 'time', 'category', 'age_limit', 'weather', 'what_to_bring']
 
     categories = Category.objects.all()
 

@@ -4,5 +4,146 @@
 {% endblock title %}
 
 {% block content %}
+    <div class="home_page">
+        <div class="container-fluid my-4 home_container">
+            <h3 class="border-bottom custom-border register-title mb-4">
+                Events Around You
+            </h3>
     
+            <div class="container">
+                <div class="row items-display_container justify-content-center">
+                    {% if events|length == 1 %}
+                        <div class="col-md-6 d-flex justify-content-center mb-4">
+                            <a href="{% url 'event:event_detail' events.0.id %}" class="item-box text-center">
+                                <div class="event-images">
+                                    {% for image in event.images.all %}
+                                        <div class="event-image">
+                                            <img src="{{ image.image.url }}" alt="{{ event.name }}" style="width: 100%; height: auto;">
+                                        </div>
+                                    {% empty %}
+                                        <p>No images available.</p>
+                                    {% endfor %}
+                                </div>
+            
+                                <div class="item-description mt-2">
+                                    <h2 class="item-name">
+                                        {{ events.0.name }}
+                                    </h2>
+
+                                    <p class="event-item">
+                                        {{ events.0.overview }}
+                                    </p>
+                                    
+                                    <p class="event-item">
+                                        By: {{ events.0.created_by }}
+                                    </p>
+
+                                    <p class="event-item">
+                                        {{ event.0.location }}
+                                    </p>
+
+                                    <p class="event-item">
+                                        {{ event.0.date }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="row event-row">
+                            {% for event in events %}
+                                <div class="col-md-6 d-flex justify-content-center event-col mb-4">
+                                    
+                                    <div class="carousel" id="carousel{{ event.id }}">
+                                        {% if event.images.all %}
+                                            <div class="carousel_inner">
+                                                {% for image in event.images.all %}
+                                                    <div class="carousel_item {% if forloop.first %}active{% endif %}">
+                                                        <img src="{{ image.image.url }}" alt="{{ event.name }}">
+                                                    </div>                                                
+                                                {% endfor %}
+                                            </div>
+                                            <button class="carousel-control prev" onclick="prevSlide({{ event.id }})">&#10094;</button>
+                                            <button class="carousel-control next" onclick="nextSlide({{ event.id }})">&#10095;</button>
+                                        {% else %}
+                                            <div class="no_img-container">
+                                                <p>No images available</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                        
+                                    <a href="{% url 'event:event_detail' event.id %}" class="event-box text-center">
+                                        <div class="event-container mt-2">
+                                            <h2 class="event-title">
+                                                {{ event.name }}
+                                            </h2>
+
+        
+                                            <p class="event-item event-profile">
+                                                <img 
+                                                    src="{{ event.created_by.profile.profile_img.url }}" 
+                                                    alt="{{ event.created_by.username }}" 
+                                                    class="profile-img_event rounded-circle">
+                                                {{ event.created_by }}
+                                            </p>
+    
+                                            <div class="event-overview">
+                                                <p class="event-item">
+                                                    {{ event.overview }}
+                                                </p>
+                                            </div>
+    
+                                            <div class="event-time event">
+                                                <p class="event-item">
+                                                    {{ event.location }}
+                                                </p>
+
+                                                <p 
+                                                    class="event-item countdown" 
+                                                    id="countdown-{{ event.id }}" 
+                                                    data-date="{{ event.date }}" 
+                                                    data-time="{{ event.time }}">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    
+        <div class="home-categories">
+            <div class="container-fluid">
+                <h3 class="border-bottom custom-border register-title mb-4">
+                    Categories
+                </h3>
+        
+                <div class="px-4 py-4 categories-list">
+                    <div class="categories-grid">
+                        {% for category in categories %}
+                            <div class="category-item">
+                                <a href="{% url 'event:events_categories' category.id %}" class="category-link">
+                                    <div class="categories-block">
+                                            <h4 class="category-name">
+                                                {{ category.name }}
+                                            </h4>
+                                        <p class="category-count text-muted mb-0">
+                                            {% if category.event.count > 1 %}
+                                                {{ category.event.count }} events
+                                            {% else %}
+                                                {{ category.event.count }} event
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

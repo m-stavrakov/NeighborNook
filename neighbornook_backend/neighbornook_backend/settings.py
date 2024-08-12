@@ -101,28 +101,6 @@ else:
         }
     }
 
-# if DATABASE_URL:
-#     DATABASES = {
-#         'default': dj_database_url.parse(DATABASE_URL),
-#     }
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-
-# DATABASES = {
-    # "default": env.dj_db_url("DATABASE_URL", default="sqlite:///db.sqlite3"),
-    # 'default': dj_database_url.parse(env("DATABASE_URL", default="sqlite:///db.sqlite3")),
-    # 'default': dj_database_url.parse(env("DATABASE_URL"), conn_max_age=600, ssl_require=True) if env("DATABASE_URL") else {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -157,9 +135,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # whitenoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'  #put / at the beginning
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

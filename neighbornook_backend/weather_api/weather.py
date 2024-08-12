@@ -7,7 +7,7 @@ def fetch_weather_data(location):
     username = settings.METEOMATICS_USERNAME
     password = settings.METEOMATICS_PASSWORD
 
-    parameters = 't_2m:C,weather_symbol_1h:idx' #if error check the idx
+    parameters = 't_2m:C,weather_symbol_1h:idx'
     time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
 
     api_url = f'{base_url}/{time}/{parameters}/{location}/json'
@@ -48,14 +48,12 @@ def get_weather_context(location):
             'temperature': temperature,
             'weather_icon': weather_icon,
             'location': 'London, UK',
-            # 'date': datetime.now().strftime('%Y-%m-%d'),
         }
     else:
         context = {
             'temperature': None,
             'weather_icon': 'default.png',
             'location': 'Unknown',
-            # 'date': datetime.now().strftime('%Y-%m-%d'),
         }
     
     return context

@@ -167,7 +167,7 @@ STATIC_URL = '/static/'  #put / at the beginning
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-LOGIN_REDIRECT_URL = 'home:home_loggedin'
+LOGIN_REDIRECT_URL = 'home:home'
 LOGIN_URL = 'user:login'
 
 MEDIA_URL = '/media/'

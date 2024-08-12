@@ -51,8 +51,7 @@ def new_conversation(request, event_pk):
 
 @login_required
 def inbox(request):
-    # conversations = Conversation.objects.filter(members__in=[request.user.id]).order_by('-modified_at')
-
+    # Get the latest message for each conversation
     latest_message_subquery = ConversationMessage.objects.filter(
         conversation=OuterRef('pk')
     ).order_by('-created_at').values('content')[:1]
@@ -62,7 +61,7 @@ def inbox(request):
     ).order_by('-modified_at').annotate(
         latest_message_content=Subquery(latest_message_subquery)
     )
-    
+
     latest_message_timestamp_subquery = ConversationMessage.objects.filter(
         conversation=OuterRef('pk')
     ).order_by('-created_at').values('created_at')[:1]

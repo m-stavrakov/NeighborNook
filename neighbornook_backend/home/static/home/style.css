@@ -145,29 +145,16 @@
     margin-left: auto !important;
 }
 
+.toggle-container{
+    display: flex;
+}
+
 /* HEADER NOT LOGGEDIN */
 
-.custom-toggler{
-    border-color: black;
-    background-color: rgba(204, 204, 204, 0.5);
-}
-
-.custom-toggler .navbar-toggler-icon {
+.navbar-toggler-icon {
     background-image: url(
 "data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-
-.not_loggedin{
-    position: relative;
-    /* height: 100vh; */
-    height: fit-content;
-    background: url('/static/home/images/gathering.jpg') no-repeat center center/cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
+    background-color: transparent;
 }
 
 .header-content {
@@ -191,7 +178,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     margin: 0 auto;
-    width: 25%;
+    width: fit-content;
     font-size: 1.6rem;
     font-weight: 900;
     text-decoration: none;
@@ -715,6 +702,7 @@ main{
 
 .event-overview{
     border-top: 1px solid var(--border-color);
+    text-align: center;
     cursor: pointer;
 }
 
@@ -786,7 +774,6 @@ main{
     border: none;
     cursor: pointer;
     transform: translateY(-50%);
-    /* z-index: 900; */
 }
 
 .carousel-control.prev {
@@ -885,7 +872,8 @@ main{
 
 .image-section{
     flex: 0 0 auto;
-    width: 600px;
+    width: fit-content;
+    /* width: 600px; */
 }
 
 .text-section{
@@ -989,9 +977,7 @@ main{
 .event_fields{
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
     width: 85%;
-    /* gap: 50px; */
 }
 
 .event-box{
@@ -1482,28 +1468,6 @@ main{
     flex: 1;
 }
 
-@media screen and (max-width: 767px){
-    .conversation-container{
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .conversation-container-right {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .chat-container{
-        width: 90%;
-    }
-
-    .message_form textarea{
-        width: 100%;
-        margin: 0 auto;
-    }
-}
-
 /* FORGOTTEN */
 
 .btn-container-reset{
@@ -1528,10 +1492,28 @@ fieldset > div{
 
 .pass_done-complete{
     margin-top: 100px;
+    text-align: center;
 }
 
 .pass_done-message{
     background-color: var(--contrast-color);
+}
+
+.forgotten-btn{
+    color: white;
+    background-color: var(--contrast-color);
+    border-radius: 5px;
+    margin: 0 auto;
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: all 0.5s ease;
+}
+
+.forgotten-btn:hover {
+    color: var(--contrast-color);
+    background-color: black;
 }
 
 /* FOOTER */
@@ -1602,14 +1584,65 @@ h3{
 
 /* MEDIA */
 @media screen and (max-width: 767px) {
-    .right_side_nav{
-        display: flex;
+
+    .event_fields{
         flex-direction: column;
-        align-items: center !important;
+    }
+
+    .conversation-container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .conversation-container-right {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .chat-container{
+        width: 90%;
+    }
+
+    .message_form textarea{
+        width: 100%;
         margin: 0 auto;
     }
 
+    .profile-image{
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    .responsiveness_nav{
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 0 auto !important;
+    }
+
     .navbar-nav{
+        align-items: center;
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .inner-container_details{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login_form{
+        margin-top: 0;
+    }
+
+    .weather-container{
+        margin-left: 10%;
+    }
+
+    .toggle-container{
+        flex-direction: column;
         align-items: center;
     }
 
@@ -1639,25 +1672,139 @@ h3{
 }
 
 @media screen and (767px <= width <= 1024px){
+
+    .event_fields{
+        flex-direction: column;
+    }
+
+    .responsiveness_nav{
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 0 auto !important;
+    }
+
+    .navbar-nav{
+        align-items: center;
+        flex-direction: row;
+        /* gap: 30px; */
+    }
+
+    .inner-container_details{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login_form{
+        margin-top: 0;
+    }
+
     .register_form{
         width: 100%;
+    }
+
+    .toggle-container{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .legals-container{
+        flex-wrap: wrap;
     }
 }
 
 @media (min-width: 768px) {
+
+    .event_fields{
+        flex-direction: column;
+    }
+
+    .responsiveness_nav{
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 0 auto !important;
+    }
+
+    .navbar-nav{
+        align-items: center;
+        flex-direction: row;
+        /* gap: 30px; */
+    }
+
+    .login_form{
+        margin-top: 0;
+    }
+
     .infinite-carousel {
         max-width: 750px; 
+    }
+
+    .legals-container{
+        flex-wrap: wrap;
     }
 }
 
 @media (min-width: 992px) {
+
+    .event_fields{
+        flex-direction: column;
+    }
+
+    .responsiveness_nav{
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 0 auto !important;
+    }
+
+    .navbar-nav{
+        align-items: center;
+        flex-direction: row;
+        /* gap: 30px; */
+    }
+
+    .login_form{
+        margin-top: 0;
+    }
+
     .infinite-carousel {
         max-width: 970px; 
+    }
+
+    .legals-container{
+        flex-wrap: wrap;
     }
 }
 
 @media (min-width: 1200px) {
+
+    .event_fields{
+        flex-direction: column;
+    }
+
+    .responsiveness_nav{
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 0 auto !important;
+    }
+
+    .navbar-nav{
+        align-items: center;
+        flex-direction: row;
+        /* gap: 30px; */
+    }
+
+    .login_form{
+        margin-top: 0;
+    }
+
     .infinite-carousel {
         max-width: 1500px;
+    }
+
+    .legals-container{
+        flex-wrap: wrap;
     }
 }

@@ -12,11 +12,9 @@ from django.urls import reverse_lazy
 from weather_api.weather import get_weather_context
 from event.models import Event, Category
 from django.urls import reverse_lazy
-from django.views.generic.edit import FormView
 from django.contrib.auth import views as auth_views
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.forms import PasswordResetForm
 
 def signup(request):
     location = '51.5072,-0.1276'
@@ -41,7 +39,7 @@ def signup(request):
             messages.success(request, f'Account created for {user.username}!')
 
             login(request, user)
-            return redirect('home:home_loggedin')
+            return redirect('home:home')
 
     else:
         form = SignUpForm()
@@ -75,7 +73,7 @@ class CustomLoginView(LoginView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('home:home_loggedin')
+        return reverse_lazy('home:home')
     
     def get(self, request, *args, **kwargs):
         location = '51.5072,-0.1276'

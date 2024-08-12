@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User 
-from PIL import Image
 
 AGE_LIMIT_CHOICES = [
     (0, 'All Ages'),

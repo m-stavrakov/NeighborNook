@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Event, EventImage, Category
-from .forms import NewEventForm, EventImageForm, EditEventForm, EventImageFormSet, EditImageForm, ImageEditFormSet
+from .forms import NewEventForm, EventImageForm, EditEventForm
 from django.forms import modelformset_factory
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -34,7 +34,7 @@ def new_event(request):
                     image_instance.event = event
                     image_instance.save()
 
-            return redirect('home:home_loggedin')
+            return redirect('home:home')
     else:
         event_form = NewEventForm()
         image_formset = ImageFormSet(queryset=EventImage.objects.none())

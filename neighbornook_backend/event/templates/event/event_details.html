@@ -1,0 +1,183 @@
+{% extends "home/base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock title %}
+{% load static %}
+
+{% block content %} 
+<div class="container event-details_container">
+
+    <div class="row g-4">
+
+        <div class="inner-container_details d-flex">
+
+            <div class="image-section me-4">
+
+                <div class="carousel" id="carousel{{ event.id }}">
+                    {% if event.images.all %}
+                        <div class="carousel_inner">
+                            {% for image in event.images.all %}
+                                <div class="carousel_item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ image.image.url }}" alt="{{ event.name }}">
+                                </div>                                                
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control prev" onclick="prevSlide({{ event.id }})">&#10094;</button>
+                        <button class="carousel-control next" onclick="nextSlide({{ event.id }})">&#10095;</button>
+                    {% else %}
+                        <div class="no_img-container">
+                            <p>No images available</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="text-section flex-grow-1">
+                <h1 class="mb-3">
+                    {{ event.name }}
+                </h1>
+
+                <a href="{% url 'user:user_profile' username=event.created_by.username %}" class="event-item event-profile_details">
+                    <img 
+                        src="{{ event.created_by.profile.profile_img.url }}" 
+                        alt="{{ event.created_by.username }}" 
+                        class="profile-img_event rounded-circle">
+                    {{ event.created_by }}
+                </a>
+
+                <div class="event-overview border-bottom">
+                    <p class="event-item">
+                        {{ event.overview }}
+                    </p>
+                </div>
+
+                {% if request.user == event.created_by %}
+                    <div class="action-btns">
+                        <a href="{% url 'event:edit_event' event.id %}" 
+                            class="btn mt-2 item-edit_btn"
+                        >
+                            Edit
+                        </a>
+    
+                        <a href="{% url 'event:delete_event' event.id %}" 
+                            class="btn mt-2 item-delete_btn"
+                        >
+                            Delete
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{% url 'communication:new_conversation' event.id %}" 
+                    class="btn mt-4 item-contact_btn">
+                    Contact creator
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+
+            <div class="col-12 mt-4">
+                {% if event.description %}
+                <p class="text-body" id='description'>
+                    <strong>
+                        Description: 
+                    </strong> <br>
+                    <span id="truncated">{{ event.description|truncatechars:700 }}</span>
+                    {% if event.description|length > 100 %} 
+                        <span id="moreText" style="display:none;">{{ event.description }}</span>
+                        <a href="javascript:void(0);" id="readMoreBtn">Read more</a>
+                    {% else %}
+                        {{ event.description }}
+                    {% endif %}
+                </p>
+                {% endif %}
+
+                <div class="event_info">
+                    <p class="info-event">
+                        <strong>
+                            Age limit:
+                        </strong> <br>
+                        {{ event_age_limit }}
+                    </p>
+                    <p class="info-event">
+                        <strong>
+                            Category:
+                        </strong> <br>
+                        {{ event.category }}
+                    </p>
+                    <p class="info-event">
+                        <strong>
+                            Weather conditions:
+                        </strong> <br>
+                        {% if event_weather == 'Sunny' %}
+                            <img src="{% static 'home/icons/sunny.png' %}" alt="Sunny" class="weather-icon">
+                        {% elif event_weather == 'Rainy' %}
+                            <img src="{% static 'home/icons/rain.png' %}" alt="Rainy" class="weather-icon">
+                        {% elif event_weather == 'Cloudy' %}
+                            <img src="{% static 'home/icons/cloudy.png' %}" alt="Cloudy" class="weather-icon">
+                        {% elif event_weather == 'Snowy' %}
+                            <img src="{% static 'home/icons/snowy.png' %}" alt="Snowy" class="weather-icon">
+                        {% else %}
+                            <img src="{% static 'home/icons/default.png' %}" alt="default" class="weather-icon">
+                        {% endif %}
+                    </p>
+                    <p class="info-event">
+                        <strong>
+                            What to bring:
+                        </strong> <br>
+                        {{ event.what_to_bring }}
+                    </p>
+                </div>
+
+                <div class="event-time event">
+                    <p class="event-item details">
+                        {{ event.location }}
+                    </p>
+
+                    <p 
+                        class="event-item countdown details" 
+                        id="countdown-{{ event.id }}" 
+                        data-date="{{ event.date }}" 
+                        data-time="{{ event.time }}">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if related_items %}
+
+     <div class="row">
+        <div class="col-md-11 mt-4 p-4 rounded details-container related-container">
+            <h2 class="mb-4 text-center">
+                Related Items
+            </h2>
+    
+            <div class="row row-cols-1 row-cols-md-3 g-4 card-container">
+                {% for item in related_items %}
+                    <div class="col">
+                        <a href="{% url 'event:detail' event.id %}" class="text-decoration-none">
+                            <div class="card h-100 inner-container">
+                                <div class="card-body rounded-bottom item-description">
+                                    <h4 class="item-name">
+                                        {{ event.name }}
+                                    </h4>
+                                    <p 
+                                        class="event-item countdown" 
+                                        id="countdown-{{ event.id }}" 
+                                        data-date="{{ event.date }}" 
+                                        data-time="{{ event.time }}">
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    {% endif %}
+   
+</div>
+{% endblock content %}

@@ -11,11 +11,11 @@ AGE_LIMIT_CHOICES = [
 ]
 
 WEATHER_CHOICES = [
-    ('sunny', 'Sunny'),
-    ('rainy', 'Rainy'),
-    ('cloudy', 'Cloudy'),
-    ('snowy', 'Snowy'),
-    ('any', 'Any'),
+    ('Sunny', 'Sunny'),
+    ('Rainy', 'Rainy'),
+    ('Cloudy', 'Cloudy'),
+    ('Snowy', 'Snowy'),
+    ('Any', 'Any'),
 ]
 
 class Category(models.Model):

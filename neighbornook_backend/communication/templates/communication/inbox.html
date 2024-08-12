@@ -1,0 +1,39 @@
+{% extends "home/base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="container-fluid home_container my-4">
+        <h1 class="border-bottom custom-border register-title">
+            {{ title }}
+        </h1>
+    
+        <div class="space-y-6 inbox">
+            {% for conversation in conversations %}
+            <a href="{% url 'communication:detail' conversation.id %}" class="p-3 mb-3 d-flex align-items-center inbox-container">
+                <div class="inbox_info d-flex justify-content-between align-items-center">
+                    <div class="info-left">
+                        {% for member in conversation.members.all %}
+                            {% if member != request.user %}
+                                <p class="mb-2 info">
+                                    <strong>@{{ member.username }}</strong> | {{ conversation.modified_at }}
+                                </p>
+                                <p class="mb-0">
+                                    Event:<br>
+                                    <span>{{ conversation.event.name }}</span>
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="latest-message">
+                        <p class="latest">Last message:<br> 
+                            <span>{{ conversation.latest_message_content }}</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

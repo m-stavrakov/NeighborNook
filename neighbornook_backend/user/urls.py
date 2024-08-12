@@ -1,7 +1,7 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
 from . import views
-from .views import UserProfileView, CustomLoginView, custom_logout_view
+from .views import UserProfileView, custom_logout_view
+
 
 app_name = "user"
 

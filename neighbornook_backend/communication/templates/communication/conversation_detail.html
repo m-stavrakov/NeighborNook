@@ -1,0 +1,50 @@
+{% extends "home/base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="container-fluid my-4 home_container main_not_loggedin">
+        <div class="container">
+            <h1 class="border-bottom custom-border conv-title">
+                {{ title }}
+            </h1>
+        
+            <div class="conversation-container">
+                <div class="space-y-6 chat-container" id="chatContainer">
+                    {% for message in conversation.messages.all %}
+                            <div class="p-5 flex
+                                        {% if message.created_by == request.user %}bg-blue-100{% else %}bg-gray-100{% endif %} 
+                                        rounded-xl">
+                                <div>
+                                    <p class="mb-4 border-bottom convo-details">
+                                        <strong>@{{ message.created_by.username }}</strong> | {{ message.created_at }}
+                                    </p>
+            
+                                    <p class="{% if message.created_by == request.user %}message_content-user{% else %}message-content{% endif %}">
+                                        {{ message.content }}
+                                    </p>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            
+                <div class="conversation-container-right">
+                    <form action="." method="post" class="mt-6 needs-validation" novalidate>
+                        {% csrf_token %}
+            
+                        <div class="space-y-4 message_form">
+                            {{ form.as_p }}
+                        </div>
+            
+                        <div class="form-group form-btn">
+                            <button class="btn auth-btn" type="submit">
+                                Reply
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

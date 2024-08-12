@@ -44,7 +44,25 @@ class EventImageForm(forms.ModelForm):
             'image': MultipleFileInput(attrs={'class': 'form-control'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['image'].required = False
+
 EventImageFormSet = modelformset_factory(EventImage, form=EventImageForm, extra=0, can_delete=True)
+
+class EditImageForm(forms.ModelForm):
+    class Meta:
+        model = EventImage
+        fields = ('image',)
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['image'].required = False
+
+ImageEditFormSet = modelformset_factory(EventImage, form=EditImageForm, extra=0, can_delete=True)
 
 class EditEventForm(forms.ModelForm):
     class Meta:
@@ -63,7 +81,7 @@ class EditEventForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'class': INPUT_CLASS}),
-            'overview': forms.TextInput(attrs={'class': INPUT_CLASS}),
+            'overview': forms.Textarea(attrs={'class': INPUT_CLASS}),
             'description': forms.Textarea(attrs={'class': INPUT_CLASS}),
             'location': forms.TextInput(attrs={'class': INPUT_CLASS}),
             'date': forms.DateInput(attrs={'class': INPUT_CLASS, 'type': 'date'}),
@@ -71,5 +89,5 @@ class EditEventForm(forms.ModelForm):
             'category': forms.Select(attrs={'class': INPUT_CLASS}),
             'age_limit': forms.Select(attrs={'class': 'form-control'}),
             'weather': forms.Select(attrs={'class': 'form-control'}),
-            'what_to_bring': forms.TextInput(attrs={'class': INPUT_CLASS}),
+            'what_to_bring': forms.Textarea(attrs={'class': INPUT_CLASS}),
         }

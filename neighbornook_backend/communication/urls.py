@@ -1,0 +1,10 @@
+from django.urls import path
+from . import views
+
+app_name = "communication"
+
+urlpatterns = [
+    path('', views.inbox, name='inbox'),
+    path('<int:pk>/', views.detail, name='detail'),
+    path('new/<int:event_pk>/', views.new_conversation, name='new_conversation'),
+]

@@ -113,7 +113,7 @@
                                     </li>
                     
                                     <li class="nav-item custom-nav-item">
-                                        <a href="#" class="nav-link custom-nav-link">
+                                        <a href="{% url 'event:event_search' %}" class="nav-link custom-nav-link">
                                             Search
                                         </a>
                                     </li>
@@ -131,11 +131,8 @@
                                             <a href="{% url 'event:new_event' %}" class="dropdown-item profile-drop_menu">
                                                 New Event
                                             </a>
-                                            <a href="#" class="dropdown-item profile-drop_menu">
+                                            <a href="{% url 'communication:inbox' %}" class="dropdown-item profile-drop_menu">
                                                 Inbox
-                                            </a>
-                                            <a href="#" class="dropdown-item profile-drop_menu">
-                                                Dashboard
                                             </a>
                                             <a href="#" class="dropdown-item profile-drop_menu">
                                                 <form method="post" action="{% url 'user:logout' %}">

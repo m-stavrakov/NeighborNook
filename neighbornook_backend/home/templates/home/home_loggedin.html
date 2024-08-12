@@ -14,39 +14,65 @@
                 <div class="row items-display_container justify-content-center">
                     {% if events|length == 1 %}
                         <div class="col-md-6 d-flex justify-content-center mb-4">
-                            <a href="{% url 'event:event_detail' events.0.id %}" class="item-box text-center">
-                                <div class="event-images">
-                                    {% for image in event.images.all %}
-                                        <div class="event-image">
-                                            <img src="{{ image.image.url }}" alt="{{ event.name }}" style="width: 100%; height: auto;">
+                            <div class="event-col single-event d-flex flex-column">
+
+                                <div class="carousel" id="carousel{{ events.0.id }}">
+                                    {% if events.0.images.all %}
+                                        <div class="carousel_inner">
+                                            {% for image in events.0.images.all %}
+                                                <div class="carousel_item {% if forloop.first %}active{% endif %}">
+                                                    <img src="{{ image.image.url }}" alt="{{ events.0.name }}">
+                                                </div>                                                
+                                            {% endfor %}
                                         </div>
-                                    {% empty %}
-                                        <p>No images available.</p>
-                                    {% endfor %}
+                                        <button class="carousel-control prev" onclick="prevSlide({{ events.0.id }})">&#10094;</button>
+                                        <button class="carousel-control next" onclick="nextSlide({{ events.0.id }})">&#10095;</button>
+                                    {% else %}
+                                        <div class="no_img-container">
+                                            <p>No images available</p>
+                                        </div>
+                                    {% endif %}
                                 </div>
-            
-                                <div class="item-description mt-2">
-                                    <h2 class="item-name">
-                                        {{ events.0.name }}
-                                    </h2>
-
-                                    <p class="event-item">
-                                        {{ events.0.overview }}
-                                    </p>
-                                    
-                                    <p class="event-item">
-                                        By: {{ events.0.created_by }}
-                                    </p>
-
-                                    <p class="event-item">
-                                        {{ event.0.location }}
-                                    </p>
-
-                                    <p class="event-item">
-                                        {{ event.0.date }}
-                                    </p>
+                                
+                                <div class="event-box text-center">
+                                    <a href="{% url 'event:event_detail' events.0.id %}" class="event-link">
+                                        <div class="item-description mt-2">
+                                            <h2 class="event-title">
+                                                {{ events.0.name }}
+                                            </h2>
+                        
+                                            <div class="event-item event-profile">
+                                                <a href="{% url 'user:user_profile' username=events.0.created_by.username %}" class="profile-link">
+                                                    <img 
+                                                        src="{{ events.0.created_by.profile.profile_img.url }}" 
+                                                        alt="{{ events.0.created_by.username }}" 
+                                                        class="profile-img_event rounded-circle">
+                                                    {{ events.0.created_by }}
+                                                </a>
+                                            </div>
+                        
+                                            <div class="event-overview">
+                                                <p class="event-item">
+                                                    {{ events.0.overview }}
+                                                </p>
+                                            </div>
+                        
+                                            <div class="event-time event">
+                                                <p class="event-item">
+                                                    {{ events.0.location }}
+                                                </p>
+                        
+                                                <p 
+                                                    class="event-item countdown" 
+                                                    id="countdown-{{ events.0.id }}" 
+                                                    data-date="{{ events.0.date }}" 
+                                                    data-time="{{ events.0.time }}">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     {% else %}
                         <div class="row event-row">
@@ -72,41 +98,45 @@
                                     </div>
                                     
                         
-                                    <a href="{% url 'event:event_detail' event.id %}" class="event-box text-center">
-                                        <div class="event-container mt-2">
-                                            <h2 class="event-title">
-                                                {{ event.name }}
-                                            </h2>
-
+                                    <div class="event-box text-center">
+                                        <a href="{% url 'event:event_detail' event.id %}" class="event-link">
+                                            <div class="event-container mt-2">
+                                                <h2 class="event-title">
+                                                    {{ event.name }}
+                                                </h2>
+    
+            
+                                                <div class="event-item event-profile">
+                                                    <a href="{% url 'user:user_profile' username=event.created_by.username %}" class="profile-link">
+                                                        <img 
+                                                            src="{{ event.created_by.profile.profile_img.url }}" 
+                                                            alt="{{ event.created_by.username }}" 
+                                                            class="profile-img_event rounded-circle">
+                                                        {{ event.created_by }}
+                                                    </a>
+                                                </div>
         
-                                            <p class="event-item event-profile">
-                                                <img 
-                                                    src="{{ event.created_by.profile.profile_img.url }}" 
-                                                    alt="{{ event.created_by.username }}" 
-                                                    class="profile-img_event rounded-circle">
-                                                {{ event.created_by }}
-                                            </p>
+                                                <div class="event-overview">
+                                                    <p class="event-item">
+                                                        {{ event.overview }}
+                                                    </p>
+                                                </div>
+        
+                                                <div class="event-time event">
+                                                    <p class="event-item">
+                                                        {{ event.location }}
+                                                    </p>
     
-                                            <div class="event-overview">
-                                                <p class="event-item">
-                                                    {{ event.overview }}
-                                                </p>
+                                                    <p 
+                                                        class="event-item countdown" 
+                                                        id="countdown-{{ event.id }}" 
+                                                        data-date="{{ event.date }}" 
+                                                        data-time="{{ event.time }}">
+                                                    </p>
+                                                </div>
                                             </div>
-    
-                                            <div class="event-time event">
-                                                <p class="event-item">
-                                                    {{ event.location }}
-                                                </p>
-
-                                                <p 
-                                                    class="event-item countdown" 
-                                                    id="countdown-{{ event.id }}" 
-                                                    data-date="{{ event.date }}" 
-                                                    data-time="{{ event.time }}">
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
@@ -131,10 +161,10 @@
                                                 {{ category.name }}
                                             </h4>
                                         <p class="category-count text-muted mb-0">
-                                            {% if category.event.count > 1 %}
-                                                {{ category.event.count }} events
+                                            {% if category.events.count > 1 %}
+                                                {{ category.events.count }} events
                                             {% else %}
-                                                {{ category.event.count }} event
+                                                {{ category.events.count }} event
                                             {% endif %}
                                         </p>
                                     </div>

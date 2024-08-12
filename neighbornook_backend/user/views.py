@@ -10,6 +10,13 @@ from django.views.generic import DetailView
 import logging
 from django.urls import reverse_lazy
 from weather_api.weather import get_weather_context
+from event.models import Event, Category
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
+from django.contrib.auth import views as auth_views
+from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.forms import PasswordResetForm
 
 def signup(request):
     location = '51.5072,-0.1276'
@@ -96,8 +103,8 @@ def profile(request, username):
     profile = get_object_or_404(Profile, user=user_profile)
     profile_img = profile.profile_img.url
     profile_bio = profile.bio
-    # add user events here + categories
-    # user_items = Item.objects.filter(created_by=user_profile, is_sold=False)[:6]
+    events = Event.objects.filter(created_by=user_profile, is_active=True).order_by('-date')
+    categories = Category.objects.all()
 
     return render(request, 'user/profile.html', {
         'profile_img': profile_img,
@@ -105,6 +112,8 @@ def profile(request, username):
         'current_user': request.user,
         'user_profile': user_profile,
         'profile': profile,
+        'events': events,
+        'categories': categories,
         **context
     })
 
@@ -140,3 +149,39 @@ class UserProfileView(DetailView):
 
     def get_object(self):
         return get_object_or_404(User, username=self.kwargs['username'])
+    
+class CustomPasswordResetView(auth_views.PasswordResetView):
+    template_name = 'user/password_reset.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        location = '51.5072,-0.1276'
+        context.update(get_weather_context(location))
+        return context
+
+class CustomPasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'user/password_reset_done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        location = '51.5072,-0.1276'
+        context.update(get_weather_context(location))
+        return context
+
+class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'user/password_reset_confirm.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        location = '51.5072,-0.1276'
+        context.update(get_weather_context(location))
+        return context
+
+class CustomPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'user/password_reset_complete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        location = '51.5072,-0.1276'
+        context.update(get_weather_context(location))
+        return context

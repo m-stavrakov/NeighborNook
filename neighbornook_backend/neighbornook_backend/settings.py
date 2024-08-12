@@ -3,6 +3,7 @@ import os
 import dj_database_url
 from environs import Env
 from dotenv import load_dotenv
+import os, certifi
 
 env = Env()
 env.read_env()
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'home.apps.HomeConfig',
     'event.apps.EventConfig',
+    'communication.apps.CommunicationConfig',
     'weather_api.apps.WeatherApiConfig',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -175,3 +177,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 METEOMATICS_USERNAME = os.environ.get('METEOMATICS_USERNAME')
 METEOMATICS_PASSWORD = os.environ.get('METEOMATICS_PASSWORD')
 METEOMATICS_BASE_URL = os.environ.get('METEOMATICS_BASE_URL')
+
+# PASSWORD RESET
+os.environ['SSL_CERT_FILE'] = certifi.where()
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')

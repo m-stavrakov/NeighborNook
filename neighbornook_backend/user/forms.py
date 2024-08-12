@@ -108,10 +108,13 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['profile_img', 'bio']
+        widgets = {
+            'profile_img': forms.ClearableFileInput(attrs={'class': 'update-img'}),
+        }
     
     def __init__(self, *args, **kwargs):
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
-        self.fields['profile_img'].widget.attrs.update({'class': 'sign_up-img'})
+        self.fields['profile_img'].widget.attrs.update({'class': 'update-img'})
     
 class LoginForm(AuthenticationForm):
     username = custom_char_field('Username', 'Username')

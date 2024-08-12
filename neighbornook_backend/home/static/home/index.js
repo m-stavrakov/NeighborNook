@@ -2,16 +2,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const carousels = document.querySelectorAll('.infinite-carousel');
     carousels.forEach(carousel => {
-        // get the inner div of each carousel
         const carouselInner = carousel.querySelector('.carousel-inner');
-        // get the images from the carousel
         const carouselContent = Array.from(carouselInner.children);
-        // duplicate the content
         carouselContent.forEach(item => {
             const duplicatedItem = item.cloneNode(true);
             carouselInner.appendChild(duplicatedItem);
         });
-        // add animation
         carouselInner.style.animation = `move 40s linear infinite`;
     });
 })
@@ -200,3 +196,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Loading longer description of events
+document.addEventListener('DOMContentLoaded', function(){
+    let readMoreBtn = document.getElementById('readMoreBtn');
+      if (readMoreBtn) {
+          let truncated = document.getElementById('truncated');
+          let moreText = document.getElementById('moreText');
+          
+          readMoreBtn.addEventListener('click', function() {
+              if (moreText.style.display === 'none' || moreText.style.display === '') {
+                  truncated.style.display = 'none';
+                  moreText.style.display = 'inline';
+                  readMoreBtn.textContent = 'Read less';
+              } else {
+                  truncated.style.display = 'inline';
+                  moreText.style.display = 'none';
+                  readMoreBtn.textContent = 'Read more';
+              }
+          });
+      }
+})
+
+// HANDLING PROFILE LINK
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelectorAll('.profile-link').forEach(function(profileLink) {
+        profileLink.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+
+    document.querySelectorAll('.event-overview').forEach(function(overview) {
+        overview.addEventListener('click', function() {
+            window.location.href = document.querySelector('.event-link').href;
+        });
+    });
+});
+
+// Showing the latest message in conversation page
+if(document.getElementById('chatContainer')){
+document.addEventListener('DOMContentLoaded', function() {
+    let chatContainer = document.getElementById('chatContainer')
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  })
+}

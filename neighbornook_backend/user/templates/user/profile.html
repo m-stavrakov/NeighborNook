@@ -1,30 +1,177 @@
 {% extends "home/base.html" %}
 {% block content %}
     <div class="container profile-container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="profile">
-            <img src="{{ profile_image }}" alt="profile image" class="profile-image {% if profile.profile_img.name == 'media/default.png' %}default-img-class{% else %}custom-img-class{% endif %}">
-            <div class="profile-info">
-                <div class="profile-details">
-                    <p class="profile-names">{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
-                    <div class="profile-details_small">
-                        <p>
-                            <small>{{ user_profile.username }}</small> / <small>{{ user_profile.email }}</small>
-                        </p>
+            <img src="{{ user.profile.profile_img.url }}" alt="profile image" class="profile-image {% if profile.profile_img.name == 'media/default.png' %}default-img-class{% else %}custom-img-class{% endif %}">
+            <div class="test">
+                <div class="profile-info">
+                    <div class="profile-details">
+                        <p class="profile-names">{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+                        <div class="profile-details_small">
+                            <p>
+                                <small>{{ user_profile.username }}</small> / <small>{{ user_profile.email }}</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="profile-edit">
+                        {% if profile.user == current_user %}
+                            <a href="{% url 'communication:inbox' %}" class="profile-inbox">
+                                <i class="bi bi-inbox"></i>
+                            </a>
+                            <button class="btn">
+                                <a href="{% url 'user:profile_update' %}" class="profile-edit_link">
+                                    Edit Profile
+                                </a>
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="profile-edit">
-                    {% if profile.user == current_user %}
-                        <a href="{% url 'communication:inbox' %}" class="profile-inbox">
-                            <i class="bi bi-inbox"></i>
-                        </a>
-                        <button class="btn">
-                            <a href="{% url 'user:profile_update' %}" class="profile-edit_link">
-                                Edit Profile
-                            </a>
-                        </button>
-                    {% endif %}
-                </div>
+
+                <p class="profile_bio">
+                    <strong>Bio:</strong><br>
+                    {{ profile_bio }}
+                </p>
             </div>
+        </div>
+
+        <div class="dashboard">
+            <h1 class="border-bottom custom-border register-title mb-4">
+                My Events
+            </h1>
+
+            <div class="row justify-content-center">
+                {% if events|length == 1 %}
+                    <div class="col-md-4 d-flex justify-content-center mb-4">
+                        <div class="event-col single-event d-flex flex-column">
+
+                            <div class="carousel" id="carousel{{ events.0.id }}">
+                                {% if events.0.images.all %}
+                                    <div class="carousel_inner">
+                                        {% for image in events.0.images.all %}
+                                            <div class="carousel_item {% if forloop.first %}active{% endif %}">
+                                                <img src="{{ image.image.url }}" alt="{{ events.0.name }}">
+                                            </div>                                                
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control prev" onclick="prevSlide({{ events.0.id }})">&#10094;</button>
+                                    <button class="carousel-control next" onclick="nextSlide({{ events.0.id }})">&#10095;</button>
+                                {% else %}
+                                    <div class="no_img-container">
+                                        <p>No images available</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <a href="{% url 'event:event_detail' events.0.id %}" class="event-box text-center">
+                                <div class="item-description mt-2">
+                                    <h2 class="event-title">
+                                        {{ events.0.name }}
+                                    </h2>
+                
+                                    <a href="{% url 'user:profile' user.username %}" class="event-item event-profile">
+                                        <img 
+                                            src="{{ events.0.created_by.profile.profile_img.url }}" 
+                                            alt="{{ events.0.created_by.username }}" 
+                                            class="profile-img_event rounded-circle">
+                                        {{ events.0.created_by }}
+                                    </a>
+                
+                                    <div class="event-overview">
+                                        <p class="event-item">
+                                            {{ events.0.overview }}
+                                        </p>
+                                    </div>
+                
+                                    <div class="event-time event">
+                                        <p class="event-item">
+                                            {{ events.0.location }}
+                                        </p>
+                
+                                        <p 
+                                            class="event-item countdown" 
+                                            id="countdown-{{ events.0.id }}" 
+                                            data-date="{{ events.0.date }}" 
+                                            data-time="{{ events.0.time }}">
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row event-row">
+                        {% for event in events %}
+                            <div class="col-md-4 d-flex justify-content-center event-col mb-4">
+                                
+                                <div class="carousel" id="carousel{{ event.id }}">
+                                    {% if event.images.all %}
+                                        <div class="carousel_inner">
+                                            {% for image in event.images.all %}
+                                                <div class="carousel_item {% if forloop.first %}active{% endif %}">
+                                                    <img src="{{ image.image.url }}" alt="{{ event.name }}">
+                                                </div>                                                
+                                            {% endfor %}
+                                        </div>
+                                        <button class="carousel-control prev" onclick="prevSlide({{ event.id }})">&#10094;</button>
+                                        <button class="carousel-control next" onclick="nextSlide({{ event.id }})">&#10095;</button>
+                                    {% else %}
+                                        <div class="no_img-container">
+                                            <p>No images available</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                    
+                                <a href="{% url 'event:event_detail' event.id %}" class="event-box text-center">
+                                    <div class="event-container mt-2">
+                                        <h2 class="event-title">
+                                            {{ event.name }}
+                                        </h2>
+
+    
+                                        <a href="{% url 'user:profile' user.username %}" class="event-item event-profile">
+                                            <img 
+                                                src="{{ event.created_by.profile.profile_img.url }}" 
+                                                alt="{{ event.created_by.username }}" 
+                                                class="profile-img_event rounded-circle">
+                                            {{ event.created_by }}
+                                        </a>
+
+                                        <div class="event-overview">
+                                            <p class="event-item">
+                                                {{ event.overview }}
+                                            </p>
+                                        </div>
+
+                                        <div class="event-time event">
+                                            <p class="event-item">
+                                                {{ event.location }}
+                                            </p>
+
+                                            <p 
+                                                class="event-item countdown" 
+                                                id="countdown-{{ event.id }}" 
+                                                data-date="{{ event.date }}" 
+                                                data-time="{{ event.time }}">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
         </div>
     </div>
     
